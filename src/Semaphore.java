@@ -9,7 +9,7 @@ public class Semaphore {
         value = initial;
     }
 
-    public synchronized void P() {
+    public synchronized void acquire() throws InterruptedException{
         value--;
         if (value < 0) {
             try {
@@ -20,7 +20,17 @@ public class Semaphore {
         }
     }
 
-    public synchronized void V() {
+    public boolean tryAcquire() {
+        synchronized (this) {
+            if (value > 0) {
+                value--;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public synchronized void release() {
         value++;
         if (value <= 0) {
             notify();

@@ -26,9 +26,9 @@ public class App {
         totalCars = scanner.nextInt();
 
         LinkedList<Car> buffer = new LinkedList<>();
-        CustomSemaphore notEmpty = new CustomSemaphore(bufferSize);
-        CustomSemaphore empty = new CustomSemaphore(0);
-        CustomSemaphore mutex = new CustomSemaphore(1);
+        Semaphore notEmpty = new Semaphore(bufferSize);
+        Semaphore empty = new Semaphore(0);
+        Semaphore mutex = new Semaphore(1);
 
         for (int i = 1; i <= numPumps; i++) {
             Pump pump = new Pump(i, buffer, empty, notEmpty, mutex);

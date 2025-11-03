@@ -3,11 +3,11 @@ import java.util.LinkedList;
 public class Pump extends Thread {
     int pumpId;
     LinkedList<Car> buffer;
-    CustomSemaphore empty;
-    CustomSemaphore notEmpty;
-    CustomSemaphore mutex;
+    Semaphore empty;
+    Semaphore notEmpty;
+    Semaphore mutex;
 
-    Pump(int pumpId, LinkedList<Car> buffer, CustomSemaphore empty, CustomSemaphore notEmpty, CustomSemaphore mutex) {
+    Pump(int pumpId, LinkedList<Car> buffer, Semaphore empty, Semaphore notEmpty, Semaphore mutex) {
         this.pumpId = pumpId;
         this.buffer = buffer;
         this.empty = empty;
@@ -19,22 +19,22 @@ public class Pump extends Thread {
     public void run() {
         while (true) {
             try {
-                // CustomSemaphore replacement
+                // Semaphore replacement
                 empty.acquire();
 
-                // CustomSemaphore replacement
+                // Semaphore replacement
                 mutex.acquire();
                 if (buffer.isEmpty()) {
-                    // CustomSemaphore replacement
+                    // Semaphore replacement
                     mutex.release();
                     continue;
                 }
                 Car car = buffer.removeFirst();
                 System.out.println("Pump " + pumpId + ": " + car.name + " Occupied");
-                // CustomSemaphore replacement
+                // Semaphore replacement
                 mutex.release();
 
-                // CustomSemaphore replacement
+                // Semaphore replacement
                 notEmpty.release();
 
                 System.out.println("Pump " + pumpId + ": " + car.name + " login");
